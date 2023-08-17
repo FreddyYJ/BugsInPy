@@ -1,4 +1,9 @@
 # BugsInPy
+## Note
+Original repository of this repo is in https://github.com/soarsmu/BugsInPy.
+Because this repository does not updated, I'm updating and fixing issues.
+
+## Original readme from soarsmu
 BugsInPy: A Database of Existing Bugs in Python Programs to Enable Controlled Testing and Debugging Studies.
 The objective of this work is to support reproducible research on real-world Python projects. 
 
