@@ -57,6 +57,7 @@ python -m venv env
 
 ###Activate environment
 if [ -d "env/Scripts" ]; then
+  act=env/Scripts/activate
   source env/Scripts/activate
 else
   check_dos2unix=$(dos2unix --version 2>&1)
@@ -64,6 +65,7 @@ else
 	   echo "Please install dos2unix (sudo apt-get dos2unix)"
 	   exit
 	fi
+  act=env/bin/activate
   source env/bin/activate
   dos2unix $work_dir/bugsinpy_requirements.txt
 fi
@@ -145,74 +147,77 @@ deactivate
 
 
 ###Add pythonpath
-  if [ "$pythonpath_set" != "" ]; then
-     if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-        saveReply=""
-        pythonpath_exist="NO"
-        should_change="NO"
-        DONE=false
-        until $DONE ;do
-        read || DONE=true
-        if [[ "$pythonpath_exist" == "YES" ]]; then
-            if [[ "$REPLY" != "export PYTHONPATH"* ]]; then
-               should_change="YES"
-            fi
-            pythonpath_exist="YES1"
-        fi
-        if [[ "$REPLY" == "PYTHONPATH="* ]]; then
-            pythonpath_exist="YES"
-            tes='"'
-            if [[ "$REPLY" != *"$pythonpath_set:"* ]]; then
-               should_change="YES"
-               saveReply=$REPLY
-               string1="${REPLY%:*}"
-               string2="${REPLY##*:}"
-               if [[ "$string2" == *"PYTHONPATH"* ]]; then
-                  echo "$string1:$pythonpath_set:$string2"
-               else
-                  temp="$"
-                  temp_py="PYTHONPATH"
-                  temp2=${REPLY%$tes*}
-                  echo "$temp2:$pythonpath_set:$temp$temp_py$tes"
-               fi
-            fi
-        fi 
-        done <  ~/.bashrc 
-        if [[ "$pythonpath_exist" == "NO" ]]; then
-            should_change="NO"
-            temp_path_not_exist='PYTHONPATH="$pythonpath_set:$PYTHONPATH"'
-            echo "$temp_path_not_exist" >> ~/.bashrc 
-            echo "export PYTHONPATH" >> ~/.bashrc 
-            source ~/.bashrc
-        fi
-        if [[ "$should_change" == "YES" ]]; then
-            echo "SHOULD CHANGE"
-            sed -i.bak '/PYTHONPATH=/d' ~/.bashrc
-            if [[ "$pythonpath_exist" == "YES1" ]]; then
-                sed -i.bak '/export PYTHONPATH/d' ~/.bashrc
-            fi
+#   if [ "$pythonpath_set" != "" ]; then
+#      if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+#         saveReply=""
+#         pythonpath_exist="NO"
+#         should_change="NO"
+#         DONE=false
+#         until $DONE ;do
+#         read || DONE=true
+#         if [[ "$pythonpath_exist" == "YES" ]]; then
+#             if [[ "$REPLY" != "export PYTHONPATH"* ]]; then
+#                should_change="YES"
+#             fi
+#             pythonpath_exist="YES1"
+#         fi
+#         if [[ "$REPLY" == "PYTHONPATH="* ]]; then
+#             pythonpath_exist="YES"
+#             tes='"'
+#             if [[ "$REPLY" != *"$pythonpath_set:"* ]]; then
+#                should_change="YES"
+#                saveReply=$REPLY
+#                string1="${REPLY%:*}"
+#                string2="${REPLY##*:}"
+#                if [[ "$string2" == *"PYTHONPATH"* ]]; then
+#                   echo "$string1:$pythonpath_set:$string2"
+#                else
+#                   temp="$"
+#                   temp_py="PYTHONPATH"
+#                   temp2=${REPLY%$tes*}
+#                   echo "$temp2:$pythonpath_set:$temp$temp_py$tes"
+#                fi
+#             fi
+#         fi 
+#         done <  ~/.bashrc 
+#         if [[ "$pythonpath_exist" == "NO" ]]; then
+#             should_change="NO"
+#             temp_path_not_exist='PYTHONPATH="$pythonpath_set:$PYTHONPATH"'
+#             echo "$temp_path_not_exist" >> ~/.bashrc 
+#             echo "export PYTHONPATH" >> ~/.bashrc 
+#             source ~/.bashrc
+#         fi
+#         if [[ "$should_change" == "YES" ]]; then
+#             echo "SHOULD CHANGE"
+#             sed -i.bak '/PYTHONPATH=/d' ~/.bashrc
+#             if [[ "$pythonpath_exist" == "YES1" ]]; then
+#                 sed -i.bak '/export PYTHONPATH/d' ~/.bashrc
+#             fi
 
             
-            string1="${saveReply%:*}"
-            string2="${saveReply##*:}"
-            if [[ "$string2" == *"PYTHONPATH"* ]]; then
-               string1="${saveReply%%/*}"
-               string2="$(cut -d'"' -f 2 <<< $saveReply)"
-               delimeter='"'
-               echo "$pythonpath_set"
-               echo "$string1"
-               echo "$string1$pythonpath_set:$string2$delimeter" >> ~/.bashrc
-            else
-               temp="$"
-               temp_py="PYTHONPATH"
-               temp2=${saveReply%$tes*}
-               echo "$temp2:$pythonpath_set:$temp$temp_py$tes" >> ~/.bashrc
-            fi
-            echo "export PYTHONPATH" >> ~/.bashrc
-            source ~/.bashrc
-        fi
-      fi
-  fi
+#             string1="${saveReply%:*}"
+#             string2="${saveReply##*:}"
+#             if [[ "$string2" == *"PYTHONPATH"* ]]; then
+#                string1="${saveReply%%/*}"
+#                string2="$(cut -d'"' -f 2 <<< $saveReply)"
+#                delimeter='"'
+#                echo "$pythonpath_set"
+#                echo "$string1"
+#                echo "PYTHONPATH=$delimeter$pythonpath_set:$string2$delimeter" >> ~/.bashrc
+#             else
+#                temp="$"
+#                temp_py="PYTHONPATH"
+#                temp2=${saveReply%$tes*}
+#                echo $saveReply
+#                echo $tes
+#                echo $temp2
+#                echo "$temp2:$pythonpath_set:$temp$temp_py$tes" >> ~/.bashrc
+#             fi
+#             echo "export PYTHONPATH" >> ~/.bashrc
+#             source ~/.bashrc
+#         fi
+#       fi
+#   fi
 
 
 ###Add compile flag

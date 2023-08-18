@@ -14,14 +14,14 @@ usage="-w work_dir
 run_all="0"
 relevant="0"
 case $1 in
- -[h?] | --help)
+ [h?] | --help)
     cat <<-____HALP
         Usage: ${0##*/} [ --help ]
         $usage
 ____HALP
         exit 0;;
- -a) run_all="1";;
- -r) relevant="1";;
+ a) run_all="1";;
+ r) relevant="1";;
 esac
 
 single_test=""
