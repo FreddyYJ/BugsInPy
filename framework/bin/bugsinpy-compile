@@ -147,6 +147,20 @@ deactivate
 
 
 ###Add pythonpath
+if [ "$pythonpath_set" != "" ]; then
+   if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+      delim="$"
+      pp="PYTHONPATH"
+      if [ -d "env/Scripts" ]; then
+         echo "PYTHONPATH=$work_dir/env/lib/python3.8/site-packages/:$delim$PYTHONPATH" >> "$work_dir/env/Scripts/activate"
+         echo "export PYTHONPATH" >> "$work_dir/env/Scripts/activate"
+      else
+         echo "PYTHONPATH=$work_dir/env/lib/python3.8/site-packages/:$delim$PYTHONPATH" >> "$work_dir/env/bin/activate"
+         echo "export PYTHONPATH" >> "$work_dir/env/bin/activate"
+      fi
+   fi
+fi
+
 #   if [ "$pythonpath_set" != "" ]; then
 #      if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
 #         saveReply=""
