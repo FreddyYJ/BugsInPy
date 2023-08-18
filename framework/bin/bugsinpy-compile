@@ -152,10 +152,10 @@ if [ "$pythonpath_set" != "" ]; then
       delim="$"
       pp="PYTHONPATH"
       if [ -d "env/Scripts" ]; then
-         echo "PYTHONPATH=$work_dir/env/lib/python3.8/site-packages/:$delim$PYTHONPATH" >> "$work_dir/env/Scripts/activate"
+         echo "PYTHONPATH=$work_dir/env/lib/python3.8/site-packages/:$delim$pp" >> "$work_dir/env/Scripts/activate"
          echo "export PYTHONPATH" >> "$work_dir/env/Scripts/activate"
       else
-         echo "PYTHONPATH=$work_dir/env/lib/python3.8/site-packages/:$delim$PYTHONPATH" >> "$work_dir/env/bin/activate"
+         echo "PYTHONPATH=$work_dir/env/lib/python3.8/site-packages/:$delim$pp" >> "$work_dir/env/bin/activate"
          echo "export PYTHONPATH" >> "$work_dir/env/bin/activate"
       fi
    fi
