@@ -146,8 +146,8 @@ fi
 deactivate
 
 
-###Add pythonpath
-if [ "$pythonpath_set" != "" ]; then
+###Add pythonpath to activate if matplotlib
+if [[ "$work_dir" == *"matplotlib"* ]]; then
    if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
       delim="$"
       pp="PYTHONPATH"
