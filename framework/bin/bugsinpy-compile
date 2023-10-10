@@ -165,6 +165,20 @@ if [[ "$work_dir" == *"matplotlib"* ]]; then
    fi
 fi
 
+if [[ "$work_dir" == *"ansible"* ]]; then
+   if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+      delim="$"
+      pp="PYTHONPATH"
+      if [ -d "env/Scripts" ]; then
+         echo "PYTHONPATH=$work_dir/lib:$delim$pp" >> "$work_dir/env/Scripts/activate"
+         echo "export PYTHONPATH" >> "$work_dir/env/Scripts/activate"
+      else
+         echo "PYTHONPATH=$work_dir/lib:$delim$pp" >> "$work_dir/env/bin/activate"
+         echo "export PYTHONPATH" >> "$work_dir/env/bin/activate"
+      fi
+   fi
+fi
+
+
 ###Add compile flag
 echo "1" > "$work_dir/bugsinpy_compile_flag"
-
